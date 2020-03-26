@@ -1,4 +1,4 @@
-# @typeoerr/router
+# @typeoerr/minimarouter
 
 ## Install
 
