@@ -99,25 +99,3 @@ export function router<T extends object, U>(tree: RouteTree<T, U>[]) {
     })
   }
 }
-
-/**
- * Helper function for route creating
- *
- * path('MEHTOD', '/path', handler): Route
- * path('/path', handler): Route
- * path('/path', [...children]): ParentRoot
- */
-interface RouteFunction {
-  <T extends object, U>(method: string, path: string, handler: RouteHandler<T, U>): Route<T, U>
-  <T extends object, U>(path: string, handler: RouteHandler<T, U>): Route<T, U>
-  <T extends object, U>(path: string, children: RouteTree<T, U>[]): ParentRoute<T, U>
-}
-
-export const route = ((...args: any[]): RouteTree<any, any> => {
-  const [a, b] = args
-  const length = args.length
-  const last = args[length - 1]
-  const path: string = length < 3 ? a : b
-  const method: string = length < 3 ? 'GET' : a
-  return Array.isArray(last) ? { path, children: last } : { path, method, handler: last }
-}) as RouteFunction
